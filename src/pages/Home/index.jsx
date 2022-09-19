@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { cartContext } from "../../context/CartContext";
 import Navbar from "../../components/Navbar";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
 
 function Index() {
@@ -23,6 +23,12 @@ function Index() {
   );
 
   const navigate = useNavigate()
+
+  const { addProductToCart } = useContext(cartContext);
+
+  const addItem= (item)=> {
+    addProductToCart(item)
+  }
 
   return (
     <>
@@ -75,7 +81,7 @@ function Index() {
                       scope="row"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Button variant="text">Add</Button>
+                      <Button variant="text" onClick={()=> addItem(product)}>Add</Button>
                     </TableCell>
                   </TableRow>
                 ))}
